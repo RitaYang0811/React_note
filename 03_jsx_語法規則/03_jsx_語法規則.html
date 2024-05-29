@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>hello_react</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <style>
+      .id {
+        background: pink;
+        font-size: 40px;
+      }
+    </style>
+
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      const myId = "0811HAHAHA";
+      const myName = "Rita";
+
+      const VDOM = (
+        <div>
+          <h2 className="id">{myId.toLowerCase()}</h2>
+          <h5 style={{ color: "red", fontSize: "30px" }}>
+            {myName.toLocaleUpperCase()}
+          </h5>
+          <input type="text" />
+        </div>
+      );
+      ReactDOM.render(VDOM, document.querySelector("#test"));
+    </script>
+  </body>
+</html>

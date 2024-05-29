@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04-1_複習＿類</title>
+  </head>
+  <body>
+    <script>
+      class Person {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+          console.log("Person", this); //指向Person的實例對象
+        }
+        //speak()放在拿裡？ speak()放在Person原型對象上，供Person的實例使用
+        speak() {
+          console.log("aa", `我叫${this.name}, 今年${this.age}歲`);
+          //walk() 會報錯 walk is not defined，他是給實例使用，不能直接調用
+          this.walk(); //方法在Person原型對象上，須透過實例才能調用
+        }
+        walk() {
+          console.log("會走路");
+        }
+      }
+      const p1 = new Person("amy", 8);
+      const p2 = new Person("ben", 88);
+      p1.speak();
+      // walk();他是給實例使用，不能直接調用
+      console.log("p2", p2);
+    </script>
+  </body>
+</html>

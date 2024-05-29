@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04-2_類中方法this的指向</title>
+  </head>
+  <body>
+    <script>
+      class Person {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+
+        speak() {
+          console.log(this);
+        }
+      }
+      const p1 = new Person("amy", 8);
+
+      // p1.speak();
+      const x = p1.speak;
+      x(); //undefined, this 的指向是看他在拿裡被調用，而這是被直接調用。因為會自動開啟嚴格模式，所以是undefined
+    </script>
+  </body>
+</html>

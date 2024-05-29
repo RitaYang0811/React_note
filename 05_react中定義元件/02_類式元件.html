@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>05-2.類式元件</title>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      //1. 創建類式元件，元件首字母大寫
+      class MyComponent extends React.Component {
+        render() {
+          console.log("class-this", this); //MyComponent的實例對象 = MyComponent元件實例對象
+          ////render是放在哪裡? 放在實例MyComponent的原型對象上
+          return <h2> 我是類定義的元件（適用於『複雜元件』的定義）</h2>;
+        }
+      }
+
+      //   2. 渲染元件到頁面，使用標籤形式，必須自閉合
+      ReactDOM.render(<MyComponent />, document.querySelector("#test"));
+
+      /* 
+      1. 解析元件標籤，找到MyCompoment元件 
+      2. 發現元件是使用類定義的，隨後就new出該類的實例，並通過該實例調用原型方法render，將返回的虛擬DOM轉為真實DOM呈現在頁面中。
+     */
+    </script>
+  </body>
+</html>
