@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>07-1_props基本使用</title>
+</head>
+
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { createRoot } = ReactDOM;
+
+    class Person extends React.Component {
+      render() {
+        console.log(this);
+        const { name, age, gender } = this.props;
+        return (
+          <ul>
+            <li>姓名：{name}</li>
+            <li>年齡：{age + 1}</li>
+            <li>性別：{gender}</li>
+          </ul>
+        );
+      }
+    }
+
+    const root1 = createRoot(document.querySelector("#test1"));
+    const root2 = createRoot(document.querySelector("#test2"));
+
+    //使用標籤屬性，單獨傳遞props
+    root1.render(<Person name="拉拉" age={18} gender="女" speak={speak} />);
+
+    //使用展開物件，批量傳遞props
+    const p = { name: "強哥", gender: "女" };
+    root2.render(<Person {...p} />);
+  </script>
+</body>
+
+</html>
