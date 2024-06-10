@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>11-2.不用函數柯里化</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      const { createRoot } = ReactDOM;
+
+      class Login extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        saveFormData = (dataType, event) => {
+          this.setState({ [dataType]: event.target.value }); //因為在事件處理已使用箭頭函式，這邊就不用使用高階函數柯里化來返回一個函數
+        };
+
+        handelSubmit = (e) => {
+          e.preventDefault();
+          const { username, password } = this.state;
+          alert(`你輸入的密碼是${username},密碼是${password}`); //取的是值，不用加value
+        };
+        render() {
+          return (
+            <form
+              action="https://www.google.com.tw"
+              onSubmit={this.handelSubmit}
+            >
+              用戶名：
+              <input
+                onChange={(e) => {
+                  this.saveFormData("username", e);
+                }} //事件處理需要返回一個函式，所以這邊直接使用箭頭函式，並將多個參數帶進去
+                type="text"
+                name="username"
+              />
+              密碼：
+              <input
+                onChange={(e) => {
+                  this.saveFormData("password", e);
+                }}
+                type="password"
+                name="password"
+              />
+              <button>登入</button>
+            </form>
+          );
+        }
+      }
+      const root = createRoot(document.querySelector("#test"));
+      root.render(<Login />);
+    </script>
+  </body>
+</html>

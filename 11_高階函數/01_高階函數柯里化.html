@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>11-1.高階函數柯里化</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      const { createRoot } = ReactDOM;
+      /* 高階函數：如果函數符合下列2個規範其中一個，就屬於高階函數。
+                1. 若A函數，接收的參數是一個函數，A函數就是一個高階函數。
+                2. 若A函數，調用的返回值依然是一個函數，A函數就是一個高階函數。
+              結論：高階函數就是將函數作為參數或是回傳值使用。
+              
+        函數柯里化：通過函數調用繼續返回函數的方式，實現多次接收參數，並且最後統一進行函數編碼處理。
+      */
+      class Login extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        saveFormData = (dataType) => {
+          //返回一個函數當作事件處理的回調函式,所以使用高階函式Currying，返回一個函數後再傳入另一個參數進行編碼處理
+          return (e) => {
+            //在React調用函式時，傳入event
+            this.setState({ [dataType]: e.target.value }); //物件屬性若為變數，需用[]取值
+          };
+        };
+
+        handelSubmit = (e) => {
+          e.preventDefault();
+          const { username, password } = this.state;
+          alert(`你輸入的密碼是${username},密碼是${password}`); //取的是值，不用加value
+        };
+        render() {
+          return (
+            <form
+              action="https://www.google.com.tw"
+              onSubmit={this.handelSubmit}
+            >
+              用戶名：
+              <input
+                onChange={this.saveFormData("username")} //如有小括號即立即被調用，事件處理需要返回一個函式，不能為一個值。
+                type="text"
+                name="username"
+              />
+              密碼：
+              <input
+                onChange={this.saveFormData("password")}
+                type="password"
+                name="password"
+              />
+              <button>登入</button>
+            </form>
+          );
+        }
+      }
+      const root = createRoot(document.querySelector("#test"));
+      root.render(<Login />);
+    </script>
+  </body>
+</html>

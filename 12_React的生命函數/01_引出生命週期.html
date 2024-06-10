@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12-1.引出生命週期</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      const { createRoot } = ReactDOM;
+      class Life extends React.Component {
+        state = { opacity: 0.5 };
+
+        discard = () => {
+          //卸載組件
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+
+        //React自動調用，只調用一次：組件掛載完畢(目前API已被棄用)
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            //獲取原狀態
+            let { opacity } = this.state;
+            opacity -= 0.1;
+            if (opacity <= 0) opacity = 1;
+            console.log("@");
+            this.setState({ opacity });
+          }, 200);
+        }
+        //組建將要卸載
+        componentWillUnmount() {
+          //清除定時器
+          clearInterval(this.timer);
+        }
+
+        //React自動調用，調用1+n次：初始化狀態,狀態更新
+        render() {
+          /* 不能放在這裡，因為數據一變化就會調用render，引發無限遞歸
+            setInterval(() => {
+                //獲取原狀態
+                let { opacity } = this.state;
+                opacity -= 0.1;
+                if (opacity <= 0) opacity = 1;
+                console.log("@");
+                this.setState({ opacity });
+          }, 200); */
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>學不會怎麼辦？</h2>
+              <button onClick={this.discard}>不活了</button>
+            </div>
+          );
+        }
+      }
+      const root = createRoot(document.querySelector("#test"));
+      root.render(<Life />);
+    </script>
+  </body>
+</html>

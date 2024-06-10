@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10-2.受控組件</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      const { createRoot } = ReactDOM;
+      //受控組件Controlled Component，隨著輸入直接更新state（實現像vue的雙向綁定）
+      class Login extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        saveUsername = (e) => {
+          this.setState({ username: e.target.value });
+        };
+        savePassword = (e) => {
+          this.setState({ password: e.target.value });
+        };
+        handelSubmit = (e) => {
+          e.preventDefault();
+          const { username, password } = this.state;
+          alert(`你輸入的密碼是${username},密碼是${password}`); //取的是值，不用加value
+        };
+        render() {
+          return (
+            <form
+              action="https://www.google.com.tw"
+              onSubmit={this.handelSubmit}
+            >
+              用戶名：
+              <input onChange={this.saveUsername} type="text" name="username" />
+              密碼：
+              <input
+                onChange={this.savePassword}
+                type="password"
+                name="password"
+              />
+              <button>登入</button>
+            </form>
+          );
+        }
+      }
+      const root = createRoot(document.querySelector("#test"));
+      root.render(<Login />);
+    </script>
+  </body>
+</html>

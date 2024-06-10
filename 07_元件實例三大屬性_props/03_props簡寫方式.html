@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>07-3_props簡寫方式</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>07-3_props簡寫方式</title>
-</head>
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <!-- 引入prop-Types 用於對元件標籤進行型別限制 -->
+    <!-- production version -->
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
 
-<body>
-  <div id="test1"></div>
-  <div id="test2"></div>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <!-- 引入prop-Types 用於對元件標籤進行型別限制 -->
-  <!-- production version -->
-  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
-  <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      const { createRoot } = ReactDOM;
 
-  <script type="text/babel">
-    const { createRoot } = ReactDOM;
+      class Person extends React.Component {
+        constructor() {
+          console.log();
+          super();
+        }
+        //限制props傳遞型別及是否必填
+        static propTypes = {
+          name: PropTypes.string.isRequired,
+          age: PropTypes.number,
+          gender: PropTypes.string,
+          speak: PropTypes.func,
+        };
 
-    class Person extends React.Component {
-      //限制props傳遞型別及是否必填
-      static propTypes = {
-        name: PropTypes.string.isRequired,
-        age: PropTypes.number,
-        gender: PropTypes.string,
-        speak: PropTypes.func,
-      }; l
-      //指定props的預設值
-      static defaultProps = {
-        gender: "不男不女",
-        age: 999,
-      };
-      render() {
-        console.log(this);
-        const { name, age, gender } = this.props;
-        return (
-          <ul>
-            <li>姓名：{name}</li>
-            <li>年齡：{age + 1}</li>
-            <li>性別：{gender}</li>
-          </ul>
-        );
+        //指定props的預設值
+        static defaultProps = {
+          gender: "不男不女",
+          age: 999,
+        };
+        render() {
+          const { name, age, gender } = this.props;
+          return (
+            <ul>
+              <li>姓名：{name}</li>
+              <li>年齡：{age + 1}</li>
+              <li>性別：{gender}</li>
+            </ul>
+          );
+        }
       }
-    }
 
-    function speak() {
-      console.log("說話巴拉巴拉");
-    }
-    const root1 = createRoot(document.querySelector("#test1"));
-    const root2 = createRoot(document.querySelector("#test2"));
+      const root = createRoot(document.querySelector("#test1"));
 
-    //使用標籤屬性，單獨傳遞props
-    root1.render(<Person name="拉拉" age={18} gender="女" speak={speak} />);
-
-    //使用展開物件，批量傳遞props
-    const p = { name: "強哥", gender: "女" };
-    root2.render(<Person {...p} />);
-  </script>
-</body>
-
+      root.render(<Person name="拉拉" />);
+    </script>
+  </body>
 </html>
