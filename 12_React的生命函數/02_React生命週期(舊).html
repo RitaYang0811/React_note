@@ -1,92 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>12-2.生命週期(舊)</title>
-  </head>
-  <body>
-    <div id="test"></div>
-    <script
-      crossorigin
-      src="https://unpkg.com/react@18/umd/react.development.js"
-    ></script>
-    <script
-      crossorigin
-      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-    ></script>
-    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
-    <script type="text/javascript" src="../js/babel.min.js"></script>
-    <script type="text/babel">
-      const { createRoot } = ReactDOM;
-      class Count extends React.Component {
-        //構造器
-        constructor(props) {
-          console.log("constructor");
-          super(props);
-          //初始化狀態
-          this.state = { count: 0 };
-        }
 
-        //點擊+1事件回調
-        add = () => {
-          const { count } = this.state;
-          this.setState({ count: count + 1 }); //更新數據
-        };
-        //點擊卸載回調
-        discard = () => {
-          ReactDOM.unmountComponentAtNode(document.getElementById("test")); //目前已棄用
-        };
-        //點擊強制更新回調
-        force = () => {
-          this.forceUpdate();
-        };
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12-2.生命週期(舊)</title>
+</head>
 
-        //組件將要掛載
-        componentWillMount() {
-          console.log("componentWillMount");
-        }
-        //組件掛載完畢
-        componentDidMount() {
-          console.log("componentDidMount");
-        }
-        //組件卸載完畢(unmountComponentAtNode已棄用，故無法正確顯示)
-        componentWillUnmount() {
-          console.log("componentWillUnmount");
-        }
-
-        //控制組件更新'閥門'
-        shouldComponentUpdate() {
-          console.log("更新 shouldComponentUpdate");
-          return false; /* 如果沒有寫這個鉤子，預設值為true。
-        如果寫了鉤子就要return true或false,如果為false 就不會進行後續render */
-        }
-        //組件將要更新
-        componentWillUpdate() {
-          console.log("更新 componentWillUpdate");
-        }
-        //組件更新完畢
-        componentDidUpdate() {
-          console.log("更新 componentDidUpdate");
-        }
-
-        //組件掛載
-        render() {
-          console.log("render");
-          const { count } = this.state;
-          return (
-            <div>
-              <h2>點我加一</h2>
-              <h3>{count}</h3>
-              <button onClick={this.add}>點我</button>
-              <button onClick={this.discard}>卸載組件</button>
-              <button onClick={this.force}>不更改狀態數據，強制更新</button>
-            </div>
-          );
-        }
+<body>
+  <div id="test"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    const { createRoot } = ReactDOM;
+    class Count extends React.Component {
+      //構造器
+      constructor(props) {
+        console.log("constructor");
+        super(props);
+        //初始化狀態
+        this.state = { count: 0 };
       }
-      const root = createRoot(document.querySelector("#test"));
-      root.render(<Count />);
-    </script>
-  </body>
+
+      //點擊+1事件回調
+      add = () => {
+        const { count } = this.state;
+        this.setState({ count: count + 1 }); //更新數據
+      };
+      //點擊卸載回調
+      discard = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("test")); //目前已棄用
+      };
+      //點擊強制更新回調
+      force = () => {
+        this.forceUpdate();
+      };
+
+      //組件將要掛載
+      componentWillMount() {
+        console.log("componentWillMount");
+      }
+      //組件掛載完畢
+      componentDidMount() {
+        console.log("componentDidMount");
+      }
+      //組件卸載完畢(unmountComponentAtNode已棄用，故無法正確顯示)
+      componentWillUnmount() {
+        console.log("componentWillUnmount");
+      }
+
+      //控制組件更新'閥門'
+      shouldComponentUpdate() {
+        console.log("更新 shouldComponentUpdate");
+        return false; /* 如果沒有寫這個鉤子，預設值為true。
+        如果寫了鉤子就要return true或false,如果為false 就不會進行後續render */
+      }
+      //組件將要更新
+      componentWillUpdate() {
+        console.log("更新 componentWillUpdate");
+      }
+      //組件更新完畢
+      componentDidUpdate() {
+        console.log("更新 componentDidUpdate");
+      }
+
+      //組件掛載
+      render() {
+        console.log("render");
+        const { count } = this.state;
+        return (
+          <div>
+            <h2>點我加一</h2>
+            <h3>{count}</h3>
+            <button onClick={this.add}>點我</button>
+            <button onClick={this.discard}>卸載組件</button>
+            <button onClick={this.force}>不更改狀態數據，強制更新</button>
+          </div>
+        );
+      }
+    }
+
+    const root = createRoot(document.querySelector("#test"));
+    root.render(<Count />);
+  </script>
+</body>
+
 </html>

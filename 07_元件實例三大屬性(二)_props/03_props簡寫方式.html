@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>07-3_props簡寫方式</title>
+</head>
+
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- 引入prop-Types 用於對元件標籤進行型別限制 -->
+  <!-- production version -->
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { createRoot } = ReactDOM;
+
+    class Person extends React.Component {
+      //構造器不一定要寫，是否接收props，是否傳遞給super，取決於:是否希望在構造器中通過this訪問props
+      constructor(props) {
+        super(props)
+        console.log(this.props);
+      }
+      //限制props傳遞型別及是否必填
+      static propTypes = {
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+        gender: PropTypes.string,
+        speak: PropTypes.func,
+      }; l
+      //指定props的預設值
+      static defaultProps = {
+        gender: "不男不女",
+        age: 999,
+      };
+      render() {
+        // console.log(this);
+        const { name, age, gender } = this.props;
+        return (
+          <ul>
+            <li>姓名：{name}</li>
+            <li>年齡：{age + 1}</li>
+            <li>性別：{gender}</li>
+          </ul>
+        );
+      }
+    }
+
+    const root1 = createRoot(document.querySelector("#test1"));
+
+    root.render(<Person name="拉拉" />);
+
+  </script>
+</body>
+
+</html>
